@@ -3,8 +3,18 @@ import { useState } from 'react';
 // import viteLogo from './assets/vite.svg'
 // import heroImg from './assets/hero.png'
 import SearchBox from '../SearchBox/SearchBox';
-import Paginate from '../Pagination/Pagination';
+
+import ReactPaginateModule from 'react-paginate';
+import type { ReactPaginateProps } from 'react-paginate';
+import type { ComponentType } from 'react';
 import css from './App.module.css';
+
+type ModuleWithDefault<T> = { default: T };
+const ReactPaginate = (
+  ReactPaginateModule as unknown as ModuleWithDefault<
+    ComponentType<ReactPaginateProps>
+  >
+).default;
 
 function App() {
   return (
@@ -12,7 +22,19 @@ function App() {
       <div className={css.app}>
         <header className={css.toolbar}>
           {<SearchBox />}
-          {<Paginate />}
+          {/* {
+            <ReactPaginate
+              // pageCount={movies.total_pages}
+              pageRangeDisplayed={5}
+              marginPagesDisplayed={1}
+              // onPageChange={({ selected }) => setcurrentPage(selected + 1)}
+              // forcePage={currentPage - 1}
+              containerClassName={css.pagination}
+              activeClassName={css.active}
+              nextLabel="→"
+              previousLabel="←"
+            />
+          } */}
           {<button className={css.button}>Create note +</button>}
         </header>
       </div>
