@@ -1,6 +1,12 @@
 import css from './NoteList.module.css';
 
-function NoteList(params: type) {
+import { type Note } from '../../types/note';
+
+interface NoteListProps {
+  notes: Note[];
+}
+
+function NoteList({ params }: NoteListProps) {
   return (
     <ul className={css.list}>
       {/* Набір елементів списку нотаток */}
