@@ -31,13 +31,13 @@ function App() {
     isSuccess,
   } = useQuery({
     queryKey: ['notes', search, currentPage],
-    queryFn: () => fetchNotes(),
+    queryFn: () => fetchNotes(search, currentPage),
     // enabled: search !== '',
     retry: 1,
     staleTime: 5000,
     // placeholderData: keepPreviousData,
   });
-  console.log(notes);
+  // console.log(notes);
 
   return (
     <>
@@ -60,7 +60,7 @@ function App() {
           {<button className={css.button}>Create note +</button>}
         </header>
 
-        {isSuccess && <NoteList notes={notes?.notes} />}
+        {isSuccess && notes && <NoteList notes={notes?.notes} />}
       </div>
     </>
   );

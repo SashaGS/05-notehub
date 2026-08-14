@@ -7,3 +7,4 @@ export interface Note{
     "tag":string;
 }
 
+export type NoteId = Note["id"];
