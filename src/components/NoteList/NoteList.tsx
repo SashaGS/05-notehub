@@ -19,7 +19,6 @@ function NoteList({ notes }: NoteListProps) {
           </div>
         </li>
       ))}
-      ;
     </ul>
   );
 }

@@ -5,7 +5,7 @@ import {type Note } from '../types/note'
 
 const token = import.meta.env.VITE_NOTEHUB_TOKEN;
 
-axios.defaults.baseURL = 'https://notehub-public.goit.study/api/docs'; 
+axios.defaults.baseURL = 'https://notehub-public.goit.study/api/notes'; 
 
 interface NotesRespons { 
     notes: Note[],
@@ -13,7 +13,7 @@ interface NotesRespons {
 }
 
 
-export const fetchNotes = async (search:string):Promise<NotesRespons> => { 
+export const fetchNotes = async ():Promise<NotesRespons> => { 
     const config = {
         headers: {
             accept: 'application/json',
@@ -21,6 +21,7 @@ export const fetchNotes = async (search:string):Promise<NotesRespons> => {
         }
     }
 
-    const resp = await axios.get(`/${search}`,config);
-    return resp.data.notes;
+    const resp = await axios.get('/', config);
+    // console.log(resp.data);
+    return resp.data;
 } 
