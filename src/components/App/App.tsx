@@ -1,9 +1,6 @@
 import { useState } from 'react';
 import { fetchNotes } from '../../services/noteService';
 import NoteList from '../NoteList/NoteList';
-// import reactLogo from './assets/react.svg'
-// import viteLogo from './assets/vite.svg'
-// import heroImg from './assets/hero.png'
 import SearchBox from '../SearchBox/SearchBox';
 
 import ReactPaginateModule from 'react-paginate';
@@ -23,6 +20,7 @@ const ReactPaginate = (
 function App() {
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [isOpenModal, setisOpenModel] = useState(false);
 
   const {
     data: notes,
@@ -38,6 +36,9 @@ function App() {
     // placeholderData: keepPreviousData,
   });
   // console.log(notes);
+  const hendleClick = () => {
+    setisOpenModel(!isOpenModal);
+  };
 
   return (
     <>
@@ -57,7 +58,11 @@ function App() {
               previousLabel="←"
             />
           )}
-          {<button className={css.button}>Create note +</button>}
+          {
+            <button className={css.button} onClick={hendleClick}>
+              Create note +
+            </button>
+          }
         </header>
 
         {isSuccess && notes && <NoteList notes={notes?.notes} />}

@@ -13,7 +13,7 @@ interface NotesRespons {
 }
 
 
-export const fetchNotes = async (search?:string, currentPage?:number):Promise<NotesRespons> => { 
+export const fetchNotes = async (search?:string, currentPage?:number) => { 
     const config = {
         headers: {
             accept: 'application/json',
@@ -25,12 +25,13 @@ export const fetchNotes = async (search?:string, currentPage?:number):Promise<No
         }
     }
 
-    const resp = await axios.get('/notes', config);
+    const resp = await axios.get<Note[]>('/notes', config);
     return resp.data;
 } 
 
-export const createNote = async (id:NoteId) => { 
-    return `${id}`
+export const createNote = async (id: NoteId) => { 
+    const respDel = await axios.delete<Note[]>(`/notes/${id}`);
+    return respDel;
 }
 
 export const deleteNote = async (id:NoteId) => { 
