@@ -3,21 +3,23 @@ import { fetchNotes } from '../../services/noteService';
 import NoteList from '../NoteList/NoteList';
 import SearchBox from '../SearchBox/SearchBox';
 
-import ReactPaginateModule from 'react-paginate';
-import type { ReactPaginateProps } from 'react-paginate';
-import type { ComponentType } from 'react';
+// import ReactPaginateModule from 'react-paginate';
+// import type { ReactPaginateProps } from 'react-paginate';
+// import type { ComponentType } from 'react';
+
 import css from './App.module.css';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import Modal from '../Modal/Modal';
 import NoteForm from '../NoteForm/NoteForm';
+import Pagination from '../Pagination/Pagination';
 // import NoteList from '../NoteList/NoteList';
 
-type ModuleWithDefault<T> = { default: T };
-const ReactPaginate = (
-  ReactPaginateModule as unknown as ModuleWithDefault<
-    ComponentType<ReactPaginateProps>
-  >
-).default;
+// type ModuleWithDefault<T> = { default: T };
+// const ReactPaginate = (
+//   ReactPaginateModule as unknown as ModuleWithDefault<
+//     ComponentType<ReactPaginateProps>
+//   >
+// ).default;
 
 function App() {
   const [search, setSearch] = useState('');
@@ -35,7 +37,7 @@ function App() {
     // enabled: search !== '',
     retry: 1,
     staleTime: 5000,
-    // placeholderData: keepPreviousData,
+    placeholderData: keepPreviousData,
   });
 
   const hendleClick = () => {
@@ -48,16 +50,10 @@ function App() {
         <header className={css.toolbar}>
           {<SearchBox />}
           {notes && notes?.totalPages > 1 && (
-            <ReactPaginate
-              pageCount={notes.totalPages}
-              pageRangeDisplayed={5}
-              marginPagesDisplayed={1}
-              onPageChange={({ selected }) => setCurrentPage(selected + 1)}
-              forcePage={currentPage - 1}
-              containerClassName={css.pagination}
-              activeClassName={css.active}
-              nextLabel="→"
-              previousLabel="←"
+            <Pagination
+              totalPages={notes?.totalPages}
+              currentPage={currentPage}
+              onPageChange={setCurrentPage}
             />
           )}
           {
