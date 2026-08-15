@@ -8,6 +8,8 @@ import type { ReactPaginateProps } from 'react-paginate';
 import type { ComponentType } from 'react';
 import css from './App.module.css';
 import { useQuery } from '@tanstack/react-query';
+import Modal from '../Modal/Modal';
+import NoteForm from '../NoteForm/NoteForm';
 // import NoteList from '../NoteList/NoteList';
 
 type ModuleWithDefault<T> = { default: T };
@@ -35,7 +37,7 @@ function App() {
     staleTime: 5000,
     // placeholderData: keepPreviousData,
   });
-  // console.log(notes);
+
   const hendleClick = () => {
     setisOpenModel(!isOpenModal);
   };
@@ -64,6 +66,11 @@ function App() {
             </button>
           }
         </header>
+        {isOpenModal && (
+          <Modal onClose={hendleClick}>
+            <NoteForm />
+          </Modal>
+        )}
 
         {isSuccess && notes && <NoteList notes={notes?.notes} />}
       </div>
