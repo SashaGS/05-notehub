@@ -30,9 +30,10 @@ export const fetchNotes = async (search:string, currentPage:number):Promise<Note
     return resp.data;
 } 
 
-export const createNote = async (id: NoteId) => { 
-    return `${id}`
-}
+// export const createNote = async (id: NoteId) => { 
+//     const respCreate = await axios.put()
+//     return respCreate;
+// }
 
 export const deleteNote = async (id: NoteId) => { 
      const respDel = await axios.delete<Note[]>(`/notes/${id}`);

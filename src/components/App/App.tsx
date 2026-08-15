@@ -9,9 +9,11 @@ import SearchBox from '../SearchBox/SearchBox';
 
 import css from './App.module.css';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import toast, { Toaster } from 'react-hot-toast';
 import Modal from '../Modal/Modal';
 import NoteForm from '../NoteForm/NoteForm';
 import Pagination from '../Pagination/Pagination';
+import Loader from '../Loader/Loader';
 // import NoteList from '../NoteList/NoteList';
 
 // type ModuleWithDefault<T> = { default: T };
@@ -62,6 +64,16 @@ function App() {
             </button>
           }
         </header>
+        {isLoading && <Loader />}
+        <Toaster
+          toastOptions={{
+            className: '',
+            style: {
+              border: '1px solid #713200',
+              background: '#d67719cb',
+            },
+          }}
+        />
         {isOpenModal && (
           <Modal onClose={hendleClick}>
             <NoteForm />
