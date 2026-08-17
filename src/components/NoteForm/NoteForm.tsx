@@ -3,6 +3,7 @@ import css from './NoteForm.module.css';
 import { useId } from 'react';
 import { Formik, Form, Field, type FormikHelpers } from 'formik';
 import { addNote } from '../../services/noteService';
+import toast from 'react-hot-toast';
 
 interface NoteFormProps {
   onClose: () => void;
@@ -16,6 +17,9 @@ function NoteForm({ onClose }: NoteFormProps) {
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ['notes'] });
       onClose();
+    },
+    onError(error) {
+      toast(`Error adding note ${error}`);
     },
   });
   const fieldId = useId();
@@ -37,7 +41,6 @@ function NoteForm({ onClose }: NoteFormProps) {
     actions: FormikHelpers<NoteFormValues>
   ) => {
     mutate({ ...values });
-    // console.log('Note data:', values);
     actions.resetForm();
   };
 
@@ -77,7 +80,11 @@ function NoteForm({ onClose }: NoteFormProps) {
         </fieldset>
         <fieldset>
           <div className={css.actions}>
-            <button type="button" className={css.cancelButton}>
+            <button
+              type="button"
+              className={css.cancelButton}
+              onClick={onClose}
+            >
               Cancel
             </button>
             <button type="submit" className={css.submitButton} disabled={false}>

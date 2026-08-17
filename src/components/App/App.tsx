@@ -3,10 +3,6 @@ import { fetchNotes } from '../../services/noteService';
 import NoteList from '../NoteList/NoteList';
 import SearchBox from '../SearchBox/SearchBox';
 
-// import ReactPaginateModule from 'react-paginate';
-// import type { ReactPaginateProps } from 'react-paginate';
-// import type { ComponentType } from 'react';
-
 import css from './App.module.css';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import toast, { Toaster } from 'react-hot-toast';
@@ -14,14 +10,6 @@ import Modal from '../Modal/Modal';
 import NoteForm from '../NoteForm/NoteForm';
 import Pagination from '../Pagination/Pagination';
 import Loader from '../Loader/Loader';
-// import NoteList from '../NoteList/NoteList';
-
-// type ModuleWithDefault<T> = { default: T };
-// const ReactPaginate = (
-//   ReactPaginateModule as unknown as ModuleWithDefault<
-//     ComponentType<ReactPaginateProps>
-//   >
-// ).default;
 
 function App() {
   const [search, setSearch] = useState('');

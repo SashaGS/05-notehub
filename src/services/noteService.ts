@@ -41,7 +41,9 @@ export const addNote = async (noteData: Pick<Note, "title" | "content" | "tag">)
 }
 
 export const deleteNote = async (id: NoteId) => { 
-    const { data } = await axios.delete<Note>(`/notes/${id}`);
+    const { data } = await axios.delete(`/notes/${id}`, {
+  headers: { Authorization: `Bearer ${token}` },
+});
     return data;
 }
 
