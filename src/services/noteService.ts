@@ -29,8 +29,14 @@ export const fetchNotes = async (search:string, currentPage:number):Promise<Note
     return resp.data;
 } 
 
-export const addNote = async (noteData: Pick<Note,"title"| "content"|"tag">) => { 
-    const {data} = await axios.post("/notes", noteData);
+export const addNote = async (noteData: Pick<Note, "title" | "content" | "tag">) => { 
+     const config = {
+        headers: {
+            accept: 'application/json',
+            Authorization: `Bearer ${token}`,
+        }
+    }
+    const {data} = await axios.post("/notes",noteData, config);
     return data;
 }
 

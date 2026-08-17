@@ -76,7 +76,7 @@ function App() {
         />
         {isOpenModal && (
           <Modal onClose={hendleClick}>
-            <NoteForm />
+            <NoteForm onClose={hendleClick} />
           </Modal>
         )}
 

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import css from './NoteForm.module.css';
 import { useId } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, type FormikHelpers } from 'formik';
 import { addNote } from '../../services/noteService';
 
 interface NoteFormProps {
@@ -32,8 +32,17 @@ function NoteForm({ onClose }: NoteFormProps) {
     tag: '',
   };
 
+  const handleSubmit = (
+    values: NoteFormValues,
+    actions: FormikHelpers<NoteFormValues>
+  ) => {
+    mutate({ ...values });
+    // console.log('Note data:', values);
+    actions.resetForm();
+  };
+
   return (
-    <Formik initialValues={{ initialValues }} onSubmit={() => {}}>
+    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       <Form className={css.form}>
         <fieldset>
           <div className={css.formGroup}>
