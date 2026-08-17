@@ -1,46 +1,83 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import css from './NoteForm.module.css';
+import { useId } from 'react';
+import { Formik, Form, Field } from 'formik';
+import { addNote } from '../../services/noteService';
 
-function NoteForm(params: type) {
+interface NoteFormProps {
+  onClose: () => void;
+}
+
+function NoteForm({ onClose }: NoteFormProps) {
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn: addNote,
+    onSuccess() {
+      queryClient.invalidateQueries({ queryKey: ['notes'] });
+      onClose();
+    },
+  });
+  const fieldId = useId();
+
+  interface NoteFormValues {
+    title: string;
+    content: string;
+    tag: string;
+  }
+
+  const initialValues: NoteFormValues = {
+    title: '',
+    content: '',
+    tag: '',
+  };
+
   return (
-    <form className={css.form}>
-      <div className={css.formGroup}>
-        <label htmlFor="title">Title</label>
-        <input id="title" type="text" name="title" className={css.input} />
-        <span data-name="title" className={css.error} />
-      </div>
+    <Formik initialValues={{ initialValues }} onSubmit={() => {}}>
+      <Form className={css.form}>
+        <fieldset>
+          <div className={css.formGroup}>
+            <label htmlFor={`${fieldId}-title`}>Title</label>
+            <Field id="title" type="text" name="title" className={css.input} />
+            <span data-name="title" className={css.error} />
+          </div>
 
-      <div className={css.formGroup}>
-        <label htmlFor="content">Content</label>
-        <textarea
-          id="content"
-          name="content"
-          rows={8}
-          className={css.textarea}
-        />
-        <span data-name="content" className={css.error} />
-      </div>
+          <div className={css.formGroup}>
+            <label htmlFor={`${fieldId}-content`}>Content</label>
+            <Field
+              id="content"
+              name="content"
+              as="textarea"
+              rows={8}
+              className={css.textarea}
+            />
+            <span data-name="content" className={css.error} />
+          </div>
 
-      <div className={css.formGroup}>
-        <label htmlFor="tag">Tag</label>
-        <select id="tag" name="tag" className={css.select}>
-          <option value="Todo">Todo</option>
-          <option value="Work">Work</option>
-          <option value="Personal">Personal</option>
-          <option value="Meeting">Meeting</option>
-          <option value="Shopping">Shopping</option>
-        </select>
-        <span data-name="tag" className={css.error} />
-      </div>
-
-      <div className={css.actions}>
-        <button type="button" className={css.cancelButton}>
-          Cancel
-        </button>
-        <button type="submit" className={css.submitButton} disabled={false}>
-          Create note
-        </button>
-      </div>
-    </form>
+          <div className={css.formGroup}>
+            <label htmlFor={`${fieldId}-tag`}>Tag</label>
+            <Field as="select" id="tag" name="tag" className={css.select}>
+              <option value="Todo">Todo</option>
+              <option value="Work">Work</option>
+              <option value="Personal">Personal</option>
+              <option value="Meeting">Meeting</option>
+              <option value="Shopping">Shopping</option>
+            </Field>
+            <span data-name="tag" className={css.error} />
+          </div>
+        </fieldset>
+        <fieldset>
+          <div className={css.actions}>
+            <button type="button" className={css.cancelButton}>
+              Cancel
+            </button>
+            <button type="submit" className={css.submitButton} disabled={false}>
+              Create note
+            </button>
+          </div>
+        </fieldset>
+      </Form>
+    </Formik>
   );
 }
 

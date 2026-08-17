@@ -16,6 +16,7 @@ function NoteList({ notes }: NoteListProps) {
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ['notes'] });
     },
+    onError() {},
   });
 
   return (

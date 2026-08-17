@@ -26,17 +26,16 @@ export const fetchNotes = async (search:string, currentPage:number):Promise<Note
     }
 
     const resp = await axios.get('/notes', config);
-    // console.log(resp.data.notes)
     return resp.data;
 } 
 
-// export const createNote = async (id: NoteId) => { 
-//     const respCreate = await axios.put()
-//     return respCreate;
-// }
+export const addNote = async (noteData: Pick<Note,"title"| "content"|"tag">) => { 
+    const {data} = await axios.post("/notes", noteData);
+    return data;
+}
 
 export const deleteNote = async (id: NoteId) => { 
-     const respDel = await axios.delete<Note[]>(`/notes/${id}`);
-    return respDel;
+    const { data } = await axios.delete<Note>(`/notes/${id}`);
+    return data;
 }
 
