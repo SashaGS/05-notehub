@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchNotes } from '../../services/noteService';
 import NoteList from '../NoteList/NoteList';
 import SearchBox from '../SearchBox/SearchBox';
 
 import css from './App.module.css';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import { useDebouncedCallback } from 'use-debounce';
 import toast, { Toaster } from 'react-hot-toast';
 import Modal from '../Modal/Modal';
 import NoteForm from '../NoteForm/NoteForm';
@@ -24,7 +25,6 @@ function App() {
   } = useQuery({
     queryKey: ['notes', search, currentPage],
     queryFn: () => fetchNotes(search, currentPage),
-    // enabled: search !== '',
     retry: 1,
     staleTime: 5000,
     placeholderData: keepPreviousData,
@@ -34,12 +34,23 @@ function App() {
     setisOpenModel(!isOpenModal);
   };
 
+  const updateSearchQuery = useDebouncedCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value),
+    300
+  );
+
+  useEffect(() => {
+    if (isError) {
+      toast('Failed to load notes. Please try again.');
+    }
+  }, [isError]);
+
   return (
     <>
       <div className={css.app}>
         <header className={css.toolbar}>
-          {<SearchBox />}
-          {notes && notes?.totalPages > 1 && (
+          {<SearchBox search={search} updateSearchQuery={updateSearchQuery} />}
+          {notes && notes.notes.length > 0 && notes?.totalPages > 1 && (
             <Pagination
               totalPages={notes?.totalPages}
               currentPage={currentPage}
