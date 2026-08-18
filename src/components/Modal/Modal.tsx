@@ -37,6 +37,8 @@ function Modal({ onClose, children, isOpen }: ModalProps) {
     };
   }, [onClose, isOpen]);
 
+  if (!isOpen) return null;
+
   return createPortal(
     <div
       className={css.backdrop}
