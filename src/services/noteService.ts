@@ -7,13 +7,13 @@ const token = import.meta.env.VITE_NOTEHUB_TOKEN;
 
 axios.defaults.baseURL = 'https://notehub-public.goit.study/api'; 
 
-interface NotesRespons { 
+interface NotesResponse { 
     notes: Note[],
     totalPages:number,
 }
 
 
-export const fetchNotes = async (search:string, currentPage:number):Promise<NotesRespons> => { 
+export const fetchNotes = async (search:string, currentPage:number):Promise<NotesResponse> => { 
     const config = {
         headers: {
             accept: 'application/json',
@@ -29,19 +29,19 @@ export const fetchNotes = async (search:string, currentPage:number):Promise<Note
     return resp.data;
 } 
 
-export const addNote = async (noteData: Pick<Note, "title" | "content" | "tag">) => { 
+export const addNote = async (noteData: Pick<Note, "title" | "content" | "tag">):Promise<Pick<Note, "title" | "content" | "tag">> => { 
      const config = {
         headers: {
             accept: 'application/json',
             Authorization: `Bearer ${token}`,
         }
     }
-    const {data} = await axios.post("/notes",noteData, config);
+    const {data} = await axios.post< Pick<Note, "title" | "content" | "tag">>("/notes",noteData, config);
     return data;
 }
 
-export const deleteNote = async (id: NoteId) => { 
-    const { data } = await axios.delete(`/notes/${id}`, {
+export const deleteNote = async (id: NoteId):Promise<Note> => { 
+    const { data } = await axios.delete<Note>(`/notes/${id}`, {
   headers: { Authorization: `Bearer ${token}` },
 });
     return data;
