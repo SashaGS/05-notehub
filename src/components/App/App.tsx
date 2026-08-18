@@ -15,7 +15,7 @@ import Loader from '../Loader/Loader';
 function App() {
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [isOpenModal, setisOpenModel] = useState(false);
+  const [isOpenModal, setisOpenModal] = useState(false);
 
   const {
     data: notes,
@@ -31,16 +31,13 @@ function App() {
   });
 
   const hendleClick = () => {
-    setisOpenModel(!isOpenModal);
+    setisOpenModal(!isOpenModal);
   };
 
-  const updateSearchQuery = useDebouncedCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearch(e.target.value);
-      setCurrentPage(1);
-    },
-    1000
-  );
+  const updateSearchQuery = useDebouncedCallback((value: string) => {
+    setSearch(value);
+    setCurrentPage(1);
+  }, 500);
 
   useEffect(() => {
     if (isError || notes?.notes.length === 0) {

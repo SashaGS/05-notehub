@@ -25,18 +25,18 @@ export const fetchNotes = async (search:string, currentPage:number):Promise<Note
         }
     }
 
-    const resp = await axios.get('/notes', config);
+    const resp = await axios.get<NotesResponse>('/notes', config);
     return resp.data;
 } 
 
-export const addNote = async (noteData: Pick<Note, "title" | "content" | "tag">):Promise<Pick<Note, "title" | "content" | "tag">> => { 
+export const addNote = async (noteData: Pick<Note, "title" | "content" | "tag">):Promise<Note> => { 
      const config = {
         headers: {
             accept: 'application/json',
             Authorization: `Bearer ${token}`,
         }
     }
-    const {data} = await axios.post< Pick<Note, "title" | "content" | "tag">>("/notes",noteData, config);
+    const {data} = await axios.post<Note>("/notes",noteData, config);
     return data;
 }
 
