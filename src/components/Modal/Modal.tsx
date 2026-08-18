@@ -6,9 +6,10 @@ import { useEffect } from 'react';
 interface ModalProps {
   onClose: () => void;
   children: React.ReactNode;
+  isOpen: true | false;
 }
 
-function Modal({ onClose, children }: ModalProps) {
+function Modal({ onClose, children, isOpen }: ModalProps) {
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       onClose();
@@ -24,10 +25,17 @@ function Modal({ onClose, children }: ModalProps) {
 
     document.addEventListener('keydown', handleKeyDown);
 
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
     };
-  }, [onClose]);
+  }, [onClose, isOpen]);
 
   return createPortal(
     <div

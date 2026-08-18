@@ -35,7 +35,10 @@ function App() {
   };
 
   const updateSearchQuery = useDebouncedCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value),
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearch(e.target.value);
+      setCurrentPage(1);
+    },
     1000
   );
 
@@ -74,7 +77,7 @@ function App() {
           }}
         />
         {isOpenModal && (
-          <Modal onClose={hendleClick}>
+          <Modal onClose={hendleClick} isOpen={isOpenModal}>
             <NoteForm onClose={hendleClick} />
           </Modal>
         )}
