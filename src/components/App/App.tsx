@@ -36,14 +36,14 @@ function App() {
 
   const updateSearchQuery = useDebouncedCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value),
-    300
+    1000
   );
 
   useEffect(() => {
-    if (isError) {
-      toast('Failed to load notes. Please try again.');
+    if (isError || notes?.notes.length === 0) {
+      toast('Failed to load notes or no matches found. Please try again.');
     }
-  }, [isError]);
+  }, [isError, notes]);
 
   return (
     <>
