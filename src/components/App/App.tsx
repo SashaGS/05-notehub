@@ -49,7 +49,7 @@ function App() {
     <>
       <div className={css.app}>
         <header className={css.toolbar}>
-          {<SearchBox search={search} updateSearchQuery={updateSearchQuery} />}
+          {<SearchBox updateSearchQuery={updateSearchQuery} />}
           {notes && notes.notes.length > 0 && notes?.totalPages > 1 && (
             <Pagination
               totalPages={notes?.totalPages}

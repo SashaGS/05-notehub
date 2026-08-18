@@ -1,17 +1,17 @@
 import css from './SearchBox.module.css';
 
 interface SearchBoxProps {
-  search: string;
+  // search: string;
   updateSearchQuery: (value: string) => void;
 }
 
-function SearchBox({ search, updateSearchQuery }: SearchBoxProps) {
+function SearchBox({ updateSearchQuery }: SearchBoxProps) {
   return (
     <input
       className={css.input}
       type="text"
       placeholder="Search notes"
-      value={search}
+      value=""
       onChange={e => updateSearchQuery(e.target.value)}
     />
   );
