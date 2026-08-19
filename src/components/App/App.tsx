@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { fetchNotes } from '../../services/noteService';
-import NoteList from '../NoteList/NoteList';
-import SearchBox from '../SearchBox/SearchBox';
-
 import css from './App.module.css';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { useDebouncedCallback } from 'use-debounce';
 import toast, { Toaster } from 'react-hot-toast';
+
 import Modal from '../Modal/Modal';
+import SearchBox from '../SearchBox/SearchBox';
+import NoteList from '../NoteList/NoteList';
 import NoteForm from '../NoteForm/NoteForm';
 import Pagination from '../Pagination/Pagination';
 import Loader from '../Loader/Loader';
@@ -32,6 +32,7 @@ function App() {
 
   const hendleClick = () => {
     setisOpenModal(!isOpenModal);
+    setCurrentPage(1);
   };
 
   const updateSearchQuery = useDebouncedCallback((value: string) => {

@@ -1,7 +1,6 @@
 import css from './SearchBox.module.css';
 
 interface SearchBoxProps {
-  // search: string;
   updateSearchQuery: (value: string) => void;
 }
 

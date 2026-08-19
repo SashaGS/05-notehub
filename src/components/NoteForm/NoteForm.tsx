@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import css from './NoteForm.module.css';
 import { useId } from 'react';
-import { Formik, Form, Field, type FormikHelpers } from 'formik';
+import { Formik, Form, Field, ErrorMessage, type FormikHelpers } from 'formik';
 import { addNote } from '../../services/noteService';
 import toast from 'react-hot-toast';
+import * as Yup from 'yup';
 
 interface NoteFormProps {
   onClose: () => void;
@@ -44,13 +45,28 @@ function NoteForm({ onClose }: NoteFormProps) {
     actions.resetForm();
   };
 
+  const NoteFormSchema = Yup.object().shape({
+    title: Yup.string()
+      .min(2, 'Name must be at least 2 characters')
+      .matches(/^[A-ZА-Я]/, 'The name must start with a capital letter.')
+      .required('required'),
+    content: Yup.string()
+      .min(5, 'content must be at least 5 characters')
+      .required('content required'),
+  });
+
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={NoteFormSchema}
+    >
       <Form className={css.form}>
         <fieldset>
           <div className={css.formGroup}>
             <label htmlFor={`${fieldId}-title`}>Title</label>
             <Field id="title" type="text" name="title" className={css.input} />
+            <ErrorMessage name="title" component="span" className={css.error} />
             <span data-name="title" className={css.error} />
           </div>
 
@@ -64,6 +80,11 @@ function NoteForm({ onClose }: NoteFormProps) {
               className={css.textarea}
             />
             <span data-name="content" className={css.error} />
+            <ErrorMessage
+              name="content"
+              component="span"
+              className={css.error}
+            />
           </div>
 
           <div className={css.formGroup}>
@@ -76,6 +97,7 @@ function NoteForm({ onClose }: NoteFormProps) {
               <option value="Shopping">Shopping</option>
             </Field>
             <span data-name="tag" className={css.error} />
+            {/* <ErrorMessage name="tag" component="span" className={css.error} /> */}
           </div>
         </fieldset>
         <fieldset>
