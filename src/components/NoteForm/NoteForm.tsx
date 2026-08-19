@@ -72,7 +72,6 @@ function NoteForm({ onClose }: NoteFormProps) {
             <label htmlFor={`${fieldId}-title`}>Title</label>
             <Field id="title" type="text" name="title" className={css.input} />
             <ErrorMessage name="title" component="span" className={css.error} />
-            <span data-name="title" className={css.error} />
           </div>
 
           <div className={css.formGroup}>
@@ -84,7 +83,7 @@ function NoteForm({ onClose }: NoteFormProps) {
               rows={8}
               className={css.textarea}
             />
-            <span data-name="content" className={css.error} />
+
             <ErrorMessage
               name="content"
               component="span"
@@ -101,7 +100,6 @@ function NoteForm({ onClose }: NoteFormProps) {
               <option value="Meeting">Meeting</option>
               <option value="Shopping">Shopping</option>
             </Field>
-            <span data-name="tag" className={css.error} />
             <ErrorMessage name="tag" component="span" className={css.error} />
           </div>
         </fieldset>
