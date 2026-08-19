@@ -34,7 +34,7 @@ function NoteForm({ onClose }: NoteFormProps) {
   const initialValues: NoteFormValues = {
     title: '',
     content: '',
-    tag: '',
+    tag: 'Personal',
   };
 
   const handleSubmit = async (
@@ -51,7 +51,7 @@ function NoteForm({ onClose }: NoteFormProps) {
 
   const NoteFormSchema = Yup.object().shape({
     title: Yup.string()
-      .min(2, 'Title must be at least 2 characters')
+      .min(3, 'Title must be at least 3 characters')
       .max(50, 'Title must be max 50 characters')
       .required('required'),
     content: Yup.string().max(500, 'content must be max 500 characters'),
