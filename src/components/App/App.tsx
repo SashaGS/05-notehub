@@ -30,9 +30,8 @@ function App() {
     placeholderData: keepPreviousData,
   });
 
-  const hendleClick = () => {
+  const handleClick = () => {
     setisOpenModal(!isOpenModal);
-    setCurrentPage(1);
   };
 
   const updateSearchQuery = useDebouncedCallback((value: string) => {
@@ -59,7 +58,7 @@ function App() {
             />
           )}
           {
-            <button className={css.button} onClick={hendleClick}>
+            <button className={css.button} onClick={handleClick}>
               Create note +
             </button>
           }
@@ -75,8 +74,8 @@ function App() {
           }}
         />
         {isOpenModal && (
-          <Modal onClose={hendleClick} isOpen={isOpenModal}>
-            <NoteForm onClose={hendleClick} />
+          <Modal onClose={handleClick} isOpen={isOpenModal}>
+            <NoteForm onClose={handleClick} />
           </Modal>
         )}
 

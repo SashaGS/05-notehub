@@ -10,7 +10,7 @@ function SearchBox({ updateSearchQuery }: SearchBoxProps) {
       className={css.input}
       type="text"
       placeholder="Search notes"
-      value=""
+      defaultValue={''}
       onChange={e => updateSearchQuery(e.target.value)}
     />
   );

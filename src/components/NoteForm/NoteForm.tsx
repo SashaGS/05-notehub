@@ -37,22 +37,27 @@ function NoteForm({ onClose }: NoteFormProps) {
     tag: '',
   };
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: NoteFormValues,
     actions: FormikHelpers<NoteFormValues>
   ) => {
-    mutate({ ...values });
-    actions.resetForm();
+    try {
+      mutate({ ...values });
+      actions.resetForm();
+    } catch (error) {
+      toast(`Error adding note ${error}`);
+    }
   };
 
   const NoteFormSchema = Yup.object().shape({
     title: Yup.string()
-      .min(2, 'Name must be at least 2 characters')
-      .matches(/^[A-ZА-Я]/, 'The name must start with a capital letter.')
+      .min(2, 'Title must be at least 2 characters')
+      .max(50, 'Title must be max 50 characters')
       .required('required'),
-    content: Yup.string()
-      .min(5, 'content must be at least 5 characters')
-      .required('content required'),
+    content: Yup.string().max(500, 'content must be max 500 characters'),
+    tag: Yup.string()
+      .oneOf(['Todo', 'Work', 'Personal', 'Meeting', 'Shopping'], 'Invalid tag')
+      .required('required'),
   });
 
   return (
@@ -97,7 +102,7 @@ function NoteForm({ onClose }: NoteFormProps) {
               <option value="Shopping">Shopping</option>
             </Field>
             <span data-name="tag" className={css.error} />
-            {/* <ErrorMessage name="tag" component="span" className={css.error} /> */}
+            <ErrorMessage name="tag" component="span" className={css.error} />
           </div>
         </fieldset>
         <fieldset>
